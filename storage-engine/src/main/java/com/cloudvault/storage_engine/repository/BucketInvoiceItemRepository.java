@@ -12,4 +12,6 @@ public interface BucketInvoiceItemRepository
         extends JpaRepository<BucketInvoiceItem, Long> {
 
     List<BucketInvoiceItem> findByInvoice(Invoice invoice);
+
+    void deleteByInvoice(Invoice invoice);
 }

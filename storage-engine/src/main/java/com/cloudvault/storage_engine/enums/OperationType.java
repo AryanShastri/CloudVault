@@ -4,7 +4,7 @@ public enum OperationType {
     PUT(RequestClass.CLASS_A),
     GET(RequestClass.CLASS_B),
     DELETE(RequestClass.FREE),
-    LIST(RequestClass.CLASS_A),
+    LIST(RequestClass.FREE),
     HEAD(RequestClass.CLASS_B),
     COPY(RequestClass.CLASS_A),
     POST(RequestClass.CLASS_A),

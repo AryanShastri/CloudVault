@@ -6,6 +6,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "storage_objects")
@@ -45,6 +47,7 @@ public class StorageObject {
     private User user;
 
     @Column(nullable = false)
+    @Builder.Default
     private boolean deleted = false;
 
     @CreationTimestamp
@@ -54,4 +57,11 @@ public class StorageObject {
     private LocalDateTime updatedAt;
 
     private LocalDateTime deletedAt;
+
+    @OneToMany(mappedBy = "storageObject",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            orphanRemoval = true)
+    @Builder.Default
+    private List<ObjectTag> tags = new ArrayList<>();
 }

@@ -63,37 +63,48 @@ public class Invoice {
     private String smartTierClassification;
 
     @Column(nullable = false, precision = 12, scale = 6)
+    @Builder.Default
     private BigDecimal storageCapacityCharge = BigDecimal.ZERO;
 
     @Column(nullable = false, precision = 12, scale = 6)
+    @Builder.Default
     private BigDecimal classARequestCharge = BigDecimal.ZERO;
 
     @Column(nullable = false, precision = 12, scale = 6)
+    @Builder.Default
     private BigDecimal classBRequestCharge = BigDecimal.ZERO;
 
     @Column(nullable = false, precision = 12, scale = 6)
+    @Builder.Default
     private BigDecimal bandwidthCharge = BigDecimal.ZERO;
 
     @Column(nullable = false, precision = 12, scale = 6)
+    @Builder.Default
     private BigDecimal dataRetrievalCharge = BigDecimal.ZERO;
 
     @Column(nullable = false, precision = 12, scale = 6)
+    @Builder.Default
     private BigDecimal archiveRestoreCharge = BigDecimal.ZERO;
 
     @Column(nullable = false, precision = 12, scale = 6)
+    @Builder.Default
     private BigDecimal minDurationCharge = BigDecimal.ZERO;
 
     @Column(nullable = false, precision = 12, scale = 6)
+    @Builder.Default
     private BigDecimal totalCharge = BigDecimal.ZERO;
 
     @Column(nullable = false, precision = 12, scale = 6)
+    @Builder.Default
     private BigDecimal amountDue = BigDecimal.ZERO;
 
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Builder.Default
     private List<BucketInvoiceItem> bucketItems = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Builder.Default
     private InvoiceStatus status = InvoiceStatus.GENERATED;
 
     @CreationTimestamp

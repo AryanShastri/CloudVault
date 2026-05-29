@@ -7,15 +7,21 @@ import com.cloudvault.storage_engine.repository.InvoiceRepository;
 import com.cloudvault.storage_engine.repository.UserRepository;
 import com.cloudvault.storage_engine.service.BillingService;
 import com.cloudvault.storage_engine.service.StorageService;
+import com.cloudvault.storage_engine.service.VirusScanService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -27,6 +33,7 @@ public class AdminController {
     private final BucketRepository bucketRepository;
     private final InvoiceRepository invoiceRepository;
     private final BillingService billingService;
+    private final VirusScanService virusScanService;
 
     @GetMapping("/overview")
     public ResponseEntity<AdminOverview> getOverview() {
@@ -92,5 +99,26 @@ public class AdminController {
         private long storageUsed;
         private String storageFormatted;
         private boolean active;
+    }
+
+    @PostMapping("/cache/clear")
+    public ResponseEntity<String> clearCache(
+            @Autowired CacheManager cacheManager) {
+        cacheManager.getCacheNames()
+                .forEach(name -> {
+                    Cache cache = cacheManager.getCache(name);
+                    if (cache != null) cache.clear();
+                });
+        return ResponseEntity.ok("All caches cleared");
+    }
+
+    @GetMapping("/health/clamav")
+    public ResponseEntity<Map<String, Object>> clamavHealth() {
+        boolean available = virusScanService.isAvailable();
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("clamav", available ? "UP" : "DOWN");
+        response.put("host", "localhost");
+        response.put("port", 3310);
+        return ResponseEntity.ok(response);
     }
 }

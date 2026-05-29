@@ -21,6 +21,12 @@ public class BillingController {
     private final BillingService billingService;
     private final UserRepository userRepository;
 
+
+    @GetMapping("/pricing")
+    public ResponseEntity<PricingReference> getPricing() {
+        return ResponseEntity.ok(billingService.getPricingReference());
+    }
+
     @GetMapping("/usage/current")
     public ResponseEntity<UsageSummary> getCurrentUsage(Authentication auth) {
         return ResponseEntity.ok(

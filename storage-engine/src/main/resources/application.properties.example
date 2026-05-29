@@ -1,0 +1,161 @@
+spring.application.name=cloudvault
+server.port=8080
+
+# MySQL
+spring.datasource.url=jdbc:mysql://localhost:3306/storage_billing?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+spring.datasource.username=
+spring.datasource.password=
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# JPA
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+
+app.rate-limiting.enabled=true
+# MinIO
+minio.endpoint=http://localhost:9000
+minio.access-key=
+minio.secret-key=
+minio.region=us-east-1
+minio.bucket=cloudvault-storage
+
+# JWT
+jwt.secret=cloudvaultsecretkeythisislongenough1234567890
+jwt.expiration-ms=86400000
+
+# Billing Rates
+billing.storage.standard=0.023
+billing.storage.vault=0.0125
+billing.storage.cold-vault=0.004
+billing.storage.archive=0.002
+billing.requests.class-a=0.005
+billing.requests.class-b=0.0004
+billing.retrieval.vault=0.01
+billing.retrieval.cold-vault=0.05
+billing.retrieval.archive=0.02
+billing.bandwidth.tier1=0.09
+billing.bandwidth.tier2=0.085
+billing.bandwidth.tier3=0.07
+billing.bandwidth.tier4=0.05
+billing.cron=0 0 0 1 * ?
+
+# Versioning Pricing
+billing.versioning.noncurrent-discount=0.90
+billing.versioning.noncurrent-bandwidth-surcharge=1.20
+
+# Bandwidth Tier Limits (in GB)
+billing.bandwidth.tier1-limit-gb=51200
+billing.bandwidth.tier2-limit-gb=153600
+billing.bandwidth.tier3-limit-gb=512000
+
+
+#FILE UPLOAD SIZE LIMITS
+spring.servlet.multipart.max-file-size=-1
+spring.servlet.multipart.max-request-size=-1
+
+# Logging
+logging.level.com.cloudvault=DEBUG
+logging.level.software.amazon.awssdk=WARN
+logging.level.org.springframework.security=DEBUG
+
+# Async
+spring.task.execution.pool.core-size=5
+spring.task.execution.pool.max-size=10
+
+#  LIFECYCLE PRICING
+
+# Storage rates per GB per month
+lifecycle.rate.standard=0.023
+lifecycle.rate.warm=0.0125
+lifecycle.rate.instant-glacier=0.004
+lifecycle.rate.deep-glacier=0.00099
+
+# Retrieval fees per GB
+lifecycle.retrieval.warm=0.01
+lifecycle.retrieval.instant-glacier=0.03
+lifecycle.retrieval.deep-glacier=0.02
+
+# Restore fees for DEEP_GLACIER
+lifecycle.restore.expedited.per-gb=0.03
+lifecycle.restore.expedited.per-request=0.01
+lifecycle.restore.standard.per-gb=0.02
+lifecycle.restore.standard.per-request=0.0025
+lifecycle.restore.bulk.per-gb=0.0025
+
+# PREDEFINED POLICY THRESHOLDS
+
+# Inactivity days before downgrading
+lifecycle.predefined.standard-to-warm-days=30
+lifecycle.predefined.warm-to-instant-glacier-days=60
+lifecycle.predefined.instant-glacier-to-deep-glacier-days=90
+
+# Request thresholds for upgrading
+lifecycle.predefined.deep-glacier-max-requests=3
+lifecycle.predefined.deep-glacier-window-days=180
+lifecycle.predefined.instant-glacier-max-requests=6
+lifecycle.predefined.instant-glacier-window-days=30
+lifecycle.predefined.warm-max-requests=9
+lifecycle.predefined.warm-window-days=30
+
+#  MINIMUM STORAGE DURATIONS (days)
+lifecycle.minimum-duration.warm=30
+lifecycle.minimum-duration.instant-glacier=90
+lifecycle.minimum-duration.deep-glacier=180
+
+#  RESTORE ACCESS WINDOWS (hours)
+lifecycle.restore.expedited.access-hours=24
+lifecycle.restore.standard.access-hours=72
+lifecycle.restore.bulk.access-hours=168
+
+#  RESTORE PROCESSING TIMES (minutes) demo mode
+lifecycle.restore.expedited.demo-minutes=1
+lifecycle.restore.standard.demo-minutes=5
+lifecycle.restore.bulk.demo-minutes=10
+
+#  SCHEDULER CRONS
+lifecycle.cron.daily=0 0 0 * * ?
+lifecycle.cron.hourly=0 0 * * * ?
+
+spring.mvc.pathmatch.use-suffix-pattern=false
+server.tomcat.encoded-solidus-handling=passthrough
+
+#HIKARI CONNECTION POOL
+spring.datasource.hikari.maximum-pool-size=50
+spring.datasource.hikari.minimum-idle=10
+spring.datasource.hikari.connection-timeout=30000
+spring.datasource.hikari.idle-timeout=600000
+spring.datasource.hikari.max-lifetime=1800000
+spring.datasource.hikari.pool-name=CloudVaultPool
+spring.datasource.hikari.leak-detection-threshold=60000
+
+#ACTUATOR
+management.endpoints.web.exposure.include=health,info,metrics
+management.endpoint.health.show-details=always
+management.info.env.enabled=true
+
+#  REDIS CACHE
+spring.data.redis.host=localhost
+spring.data.redis.port=6379
+spring.cache.type=redis
+spring.cache.redis.time-to-live=300000
+spring.cache.redis.key-prefix=cloudvault:
+spring.cache.redis.use-key-prefix=true
+
+# CLAMAV
+clamav.host=localhost
+clamav.port=3310
+clamav.timeout=0
+clamav.enabled=true
+
+#  BACKUP CONFIGURATION
+backup.local-path=C:\backups\cloudvault
+backup.bucket=backup-storage
+backup.retention-days=30
+
+# MySQL connection for mysqldump
+database.name=storage_billing
+database.user=
+database.password=
+database.host=localhost
+database.port=3306

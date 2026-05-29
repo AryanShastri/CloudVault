@@ -33,17 +33,34 @@ import java.math.BigDecimal;
         @Enumerated(EnumType.STRING)
         private StorageClass storageClass;
 
-        // Usage
+
+        @Column(length = 30)
+        private String lifecycleTier;
+
+         @Column(nullable = false)
+         @Builder.Default
+         private long currentVersionBytes = 0;
+
+         @Column(nullable = false)
+            @Builder.Default
+            private long noncurrentVersionBytes = 0;
+
+          @Column(nullable = false, precision = 12, scale = 6)private BigDecimal versioningStorageCharge = BigDecimal.ZERO;
+
+
         private long storageBytesUsed;
         private long classARequests;
         private long classBRequests;
         private long bandwidthBytesOut;
 
-        // Charges
+
+        @Builder.Default
         private BigDecimal storageCharge = BigDecimal.ZERO;
         private BigDecimal classACharge = BigDecimal.ZERO;
+        @Builder.Default
         private BigDecimal classBCharge = BigDecimal.ZERO;
         private BigDecimal bandwidthCharge = BigDecimal.ZERO;
+        @Builder.Default
         private BigDecimal retrievalCharge = BigDecimal.ZERO;
         private BigDecimal subtotal = BigDecimal.ZERO;
     }

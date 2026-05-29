@@ -34,6 +34,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Builder.Default
     private UserRole role = UserRole.USER;
 
     @Column(nullable = false, unique = true, length = 36)
@@ -44,6 +45,7 @@ public class User {
     private BigDecimal totalBilled = BigDecimal.ZERO;
 
     @Column(nullable = false)
+    @Builder.Default
     private boolean active = true;
 
     @CreationTimestamp
