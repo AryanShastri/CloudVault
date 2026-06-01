@@ -90,37 +90,7 @@ CloudVault is a self-hosted cloud storage platform inspired by AWS S3. It provid
 
 ## Architecture
 
-```
-┌───────────────────────────────────────────────────────────────────┐
-│                        Browser (React SPA)                        │
-│   React 19 + Vite 8 + TailwindCSS 4 + React Router 7 + Recharts   │
-└────────────────────────────┬──────────────────────────────────────┘
-                             │  REST / JSON  (Axios)
-                             ▼
-┌───────────────────────────────────────────────────────────────────┐
-│              Spring Boot 3.2  (storage-engine)                    │
-│                                                                   │
-│  Controllers  →  Services  →  Repositories (Spring Data JPA)      │
-│                                                                   │
-│  ┌──────────┐  ┌──────────┐  ┌───────────┐  ┌────────────────┐    │
-│  │ Security │  │  Billing │  │ Lifecycle │  │  Async Upload  │    │
-│  │ JWT+RBAC │  │Scheduler │  │ Scheduler │  │   + ClamAV     │    │
-│  └──────────┘  └──────────┘  └───────────┘  └────────────────┘    │
-└──────┬───────────────────┬───────────────────────┬───────────────┘
-       │                   │                       │
-       ▼                   ▼                       ▼
-  ┌─────────┐        ┌──────────┐           ┌──────────┐
-  │  MySQL  │        │  MinIO   │           │  Redis   │
-  │  (JPA)  │        │  (S3 API)│           │  Cache   │
-  └─────────┘        └──────────┘           └──────────┘
-                           │
-                     ┌──────────┐
-                     │  ClamAV  │
-                     │ (TCP 3310│
-                     └──────────┘
-```
-
----
+![Image Alt](https://github.com/AryanShastri/CloudVault/blob/a2b504bac6f11c3698505427375fcd0e4122963d/frontend/src/assets/diagram-export-5-31-2026-12_05_11-PM.png)
 
 ## Tech Stack
 
