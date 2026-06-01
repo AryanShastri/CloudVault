@@ -498,8 +498,6 @@ Restore fees are charged immediately on request submission.
 
 - **Authentication**: Stateless JWT — short-lived access token (15 min) + long-lived refresh token (7 days)
 - **Password storage**: BCrypt hashing (10 rounds)
-- **Authorization**: Role-based — `USER` (default) and `ADMIN`
-- **Account lockout**: Locks after 5 consecutive failed logins; auto-unlocks after 30 minutes
 - **Rate limiting**: Bucket4j token-bucket algorithm applied at servlet filter level to write operations
 - **CORS**: Configurable allowed origins (wildcard in development only)
 - **Virus scanning**: ClamAV scans every upload before it is committed to MinIO; infected files are never persisted
